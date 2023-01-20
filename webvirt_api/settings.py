@@ -14,6 +14,8 @@ Copyright (C) 2023 Kevin Morris
 import os
 from pathlib import Path
 
+from str2bool import str2bool
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -28,7 +30,7 @@ DEBUG_SECRET = (
 SECRET_KEY = os.environ.get("SECRET_KEY", DEBUG_SECRET)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = str2bool(os.environ.get("DEBUG", "1"))
 
 ALLOWED_HOSTS = []
 
