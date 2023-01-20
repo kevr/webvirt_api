@@ -66,6 +66,12 @@ as the project will need to be served using a WSGI backend like `uwsgi` as a
 backend to web server software like [nginx](https://www.nginx.com/) or
 [apache](https://www.apache.org/).
 
+The following environment variables should be set when running in
+production:
+
+- `DEBUG=0`
+- `SECRET_KEY='your_production_secret_key'`
+
 Interested In Contributing?
 ---------------------------
 
