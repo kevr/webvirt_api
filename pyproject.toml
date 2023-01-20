@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "webvirt-api"
+version = "0.1.0"
+description = "Back-end API for the webvirt application"
+authors = ["Kevin Morris <kevr@0cost.org>"]
+license = "LICENSE"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+django = "^4.1.5"
+python-pam = "^2.0.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
