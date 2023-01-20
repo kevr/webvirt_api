@@ -8,9 +8,11 @@ readme = "README.md"
 
 [tool.black]
 line-length = 79
+exclude = "[.]?venv/.*"
 
 [tool.isort]
 profile = "black"
+skip_glob = "*venv/**"
 
 [tool.poetry.dependencies]
 python = "^3.10"
