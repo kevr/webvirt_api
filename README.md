@@ -1,8 +1,8 @@
 webvirt_api
 -----------
 
-![lint](https://github.com/kevr/webvirt_api/actions/workflows/lint.yaml/badge.svg)
-![tests](https://github.com/kevr/webvirt_api/actions/workflows/tests.yaml/badge.svg)
+![lint](https://github.com/kevr/webvirt_api/actions/workflows/lint.yaml/badge.svg?branch=master)
+![tests](https://github.com/kevr/webvirt_api/actions/workflows/tests.yaml/badge.svg?branch=master)
 
 Back-end API for the webvirt application (driven by [Django](https://www.djangoproject.com/)).
 
