@@ -5,7 +5,10 @@ webvirt_api
 ![tests](https://github.com/kevr/webvirt_api/actions/workflows/tests.yaml/badge.svg?branch=master)
 [![license](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
-Back-end API for the webvirt application (driven by [Django](https://www.djangoproject.com/)).
+Back-end API for the webvirt application driven by [Django](https://www.djangoproject.com/)
+
+See the complete API specification at
+[SwaggerHub](https://app.swaggerhub.com/apis/kevr/webvirt_api/)
 
 Installation
 ------------
