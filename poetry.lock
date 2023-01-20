@@ -348,6 +348,17 @@ files = [
 ]
 
 [[package]]
+name = "str2bool"
+version = "1.1"
+description = "Convert string to boolean"
+category = "main"
+optional = false
+python-versions = "*"
+files = [
+    {file = "str2bool-1.1.zip", hash = "sha256:dbc3c917dca831904bce8568f6fb1f91435fcffc2ec4a46d62c9aa08d7cf77c3"},
+]
+
+[[package]]
 name = "tomli"
 version = "2.0.1"
 description = "A lil' TOML parser"
@@ -374,4 +385,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "b51f9b089af59d04dd4f2180d6bde5eb44eb650a7256b4abc83a064cf04694bb"
+content-hash = "8b4df867bd63c70b163a0772db67b4ed7957dee61c6a8aa8b826222f13813e67"
