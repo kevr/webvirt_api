@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 Copyright (C) 2023 Kevin Morris
 """
 import os
+from datetime import timedelta
 from pathlib import Path
 
 from str2bool import str2bool
@@ -45,6 +46,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
+    "authentication",
 ]
 
 MIDDLEWARE = [
@@ -138,3 +140,15 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    )
+}
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(hours=1),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+    "ROTATE_REFRESH_TOKENS": True,
+}
