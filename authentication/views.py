@@ -10,13 +10,15 @@ from rest_framework_simplejwt.tokens import RefreshToken
 
 
 class AuthView(APIView):
-    _pam = pam.PamAuthenticator()
+    def __init__(self, *args, **kwargs) -> "AuthView":
+        super().__init__(*args, **kwargs)
+        self.pam = pam.PamAuthenticator()
 
     def post(self, request: Request) -> Response:
         username = request.data.get("user", str())
         password = request.data.get("password", str())
 
-        if not self._pam.authenticate(username, password, service="login"):
+        if not self.pam.authenticate(username, password, service="login"):
             return Response(
                 {"error": "Unrecognized user/password combination"},
                 status=HTTPStatus.UNAUTHORIZED,
