@@ -1,5 +1,6 @@
 # Files
 db.sqlite3
+.coverage
 
 # Directories
 __pycache__/
