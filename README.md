@@ -3,6 +3,7 @@ webvirt_api
 
 ![lint](https://github.com/kevr/webvirt_api/actions/workflows/lint.yaml/badge.svg?branch=master)
 ![tests](https://github.com/kevr/webvirt_api/actions/workflows/tests.yaml/badge.svg?branch=master)
+[![license](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 Back-end API for the webvirt application (driven by [Django](https://www.djangoproject.com/)).
 
