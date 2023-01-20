@@ -1,0 +1,5 @@
+# Files
+db.sqlite3
+
+# Directories
+__pycache__/
