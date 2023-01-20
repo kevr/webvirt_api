@@ -6,6 +6,12 @@ authors = ["Kevin Morris <kevr@0cost.org>"]
 license = "LICENSE"
 readme = "README.md"
 
+[tool.black]
+line-length = 79
+
+[tool.isort]
+profile = "black"
+
 [tool.poetry.dependencies]
 python = "^3.10"
 django = "^4.1.5"
