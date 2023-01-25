@@ -22,6 +22,7 @@ str2bool = "^1.1"
 djangorestframework = "^3.14.0"
 six = "^1.16.0"
 djangorestframework-simplejwt = "^5.2.2"
+requests-unixsocket = "^0.3.0"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.2.1"
