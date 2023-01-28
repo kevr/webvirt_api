@@ -20,7 +20,7 @@ class AuthView(APIView):
 
         if not self.pam.authenticate(username, password, service="login"):
             return Response(
-                {"error": "Unrecognized user/password combination"},
+                {"detail": "Unrecognized user/password combination"},
                 status=HTTPStatus.UNAUTHORIZED,
             )
 
