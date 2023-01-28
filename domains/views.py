@@ -24,7 +24,7 @@ class DomainsView(APIView):
         data = {}
         try:
             response = session.post(
-                f"http+unix://{uri}/domains",
+                f"http+unix://{uri}/domains/",
                 data=json.dumps({"user": user}),
             )
 
