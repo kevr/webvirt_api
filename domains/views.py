@@ -35,3 +35,28 @@ class DomainsView(APIView):
             data["detail"] = "Unable to connect to webvirtd"
 
         return Response(data, status=status_code)
+
+
+class DomainView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request: Request, name: str) -> Response:
+        user = request.user.username
+        session = requests_unixsocket.Session()
+        uri = quote_plus(settings.WEBVIRTD_SOCKET)
+
+        status_code = HTTPStatus.OK
+        data = {}
+        try:
+            response = session.post(
+                f"http+unix://{uri}/domains/{name}/",
+                data=json.dumps({"user": user}),
+            )
+
+            status_code = response.status_code
+            data = response.json()
+        except ConnectionError:
+            status_code = HTTPStatus.INTERNAL_SERVER_ERROR
+            data["detail"] = "Unable to connect to webvirtd"
+
+        return Response(data, status_code)
