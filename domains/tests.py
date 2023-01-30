@@ -31,7 +31,6 @@ class DomainsTest(TestCase):
         session = mock.return_value
 
         response = Response(status=200)
-        response.json = lambda: []
         session.post.side_effect = ConnectionError
 
         self.client.force_authenticate(self.user)
@@ -65,7 +64,6 @@ class DomainTest(TestCase):
         session = mock.return_value
 
         response = Response(status=200)
-        response.json = lambda: []
         session.post.side_effect = ConnectionError
 
         self.client.force_authenticate(self.user)
