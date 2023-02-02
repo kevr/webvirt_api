@@ -39,6 +39,9 @@ jobs:
       - run: poetry install --no-interaction --no-root
         if: steps.cache-deps.outputs.cache-hit != 'true'
 
+      - name: Run license checks
+        run: bash scripts/check-license.sh .
+
       - name: Run flake8 checks
         run: poetry run flake8 --count .
 
