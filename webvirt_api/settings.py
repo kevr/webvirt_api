@@ -157,4 +157,4 @@ SIMPLE_JWT = {
 
 CORS_ALLOWED_ORIGINS = ["http://localhost:3000"]
 
-WEBVIRTD_SOCKET = os.getenv("WEBVIRTD_SOCKET", "")
+WEBVIRTD_SOCKET = os.getenv("WEBVIRTD_SOCKET", "/var/run/webvirtd.sock")
