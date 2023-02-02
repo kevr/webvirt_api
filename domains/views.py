@@ -14,29 +14,33 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 
+def api_request(request_uri: str, user: str):
+    session = requests_unixsocket.Session()
+    uri = quote_plus(settings.WEBVIRTD_SOCKET)
+    status_code = HTTPStatus.OK
+    data = {}
+    try:
+        response = session.post(
+            f"http+unix://{uri}{request_uri}",
+            data=json.dumps({"user": user}),
+        )
+
+        status_code = response.status_code
+        data = response.json()
+    except ConnectionError:
+        status_code = HTTPStatus.INTERNAL_SERVER_ERROR
+        data["detail"] = "Unable to connect to webvirtd"
+
+    return (status_code, data)
+
+
 class DomainsView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request: Request) -> Response:
         user = request.user.username
-        session = requests_unixsocket.Session()
-        uri = quote_plus(settings.WEBVIRTD_SOCKET)
-
-        status_code = HTTPStatus.OK
-        data = {}
-        try:
-            response = session.post(
-                f"http+unix://{uri}/domains/",
-                data=json.dumps({"user": user}),
-            )
-
-            status_code = response.status_code
-            data = response.json()
-        except ConnectionError:
-            status_code = HTTPStatus.INTERNAL_SERVER_ERROR
-            data["detail"] = "Unable to connect to webvirtd"
-
-        return Response(data, status=status_code)
+        status_code, data = api_request("/domains/", user)
+        return Response(data, status_code)
 
 
 class DomainView(APIView):
@@ -44,23 +48,7 @@ class DomainView(APIView):
 
     def get(self, request: Request, name: str) -> Response:
         user = request.user.username
-        session = requests_unixsocket.Session()
-        uri = quote_plus(settings.WEBVIRTD_SOCKET)
-
-        status_code = HTTPStatus.OK
-        data = {}
-        try:
-            response = session.post(
-                f"http+unix://{uri}/domains/{name}/",
-                data=json.dumps({"user": user}),
-            )
-
-            status_code = response.status_code
-            data = response.json()
-        except ConnectionError:
-            status_code = HTTPStatus.INTERNAL_SERVER_ERROR
-            data["detail"] = "Unable to connect to webvirtd"
-
+        status_code, data = api_request(f"/domains/{name}/", user)
         return Response(data, status_code)
 
 
@@ -68,23 +56,7 @@ class DomainView(APIView):
 @permissions([IsAuthenticated])
 def domain_start(request: Request, name: str) -> Response:
     user = request.user.username
-    session = requests_unixsocket.Session()
-    uri = quote_plus(settings.WEBVIRTD_SOCKET)
-
-    status_code = HTTPStatus.OK
-    data = {}
-    try:
-        response = session.post(
-            f"http+unix://{uri}/domains/{name}/start/",
-            data=json.dumps({"user": user}),
-        )
-
-        status_code = response.status_code
-        data = response.json()
-    except ConnectionError:
-        status_code = HTTPStatus.INTERNAL_SERVER_ERROR
-        data["detail"] = "Unable to connect to webvirtd"
-
+    status_code, data = api_request(f"/domains/{name}/start/", user)
     return Response(data, status_code)
 
 
@@ -92,21 +64,5 @@ def domain_start(request: Request, name: str) -> Response:
 @permissions([IsAuthenticated])
 def domain_shutdown(request: Request, name: str) -> Response:
     user = request.user.username
-    session = requests_unixsocket.Session()
-    uri = quote_plus(settings.WEBVIRTD_SOCKET)
-
-    status_code = HTTPStatus.OK
-    data = {}
-    try:
-        response = session.post(
-            f"http+unix://{uri}/domains/{name}/shutdown/",
-            data=json.dumps({"user": user}),
-        )
-
-        status_code = response.status_code
-        data = response.json()
-    except ConnectionError:
-        status_code = HTTPStatus.INTERNAL_SERVER_ERROR
-        data["detail"] = "Unable to connect to webvirtd"
-
+    status_code, data = api_request(f"/domains/{name}/shutdown/", user)
     return Response(data, status_code)

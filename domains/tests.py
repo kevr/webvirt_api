@@ -72,3 +72,27 @@ class DomainTest(TestCase):
         self.assertTrue("detail" in data)
         self.assertEqual(data["detail"], "Unable to connect to webvirtd")
         self.assertEqual(response.status_code, 500)
+
+    @mock.patch("requests_unixsocket.Session")
+    def test_start_post(self, mock: mock.MagicMock):
+        session = mock.return_value
+
+        response = Response(status=201)
+        response.json = lambda: {}
+        session.post.return_value = response
+
+        self.client.force_authenticate(self.user)
+        response = self.client.post("/domains/test/start/")
+        self.assertEqual(response.status_code, 201)
+
+    @mock.patch("requests_unixsocket.Session")
+    def test_shutdown_post(self, mock: mock.MagicMock):
+        session = mock.return_value
+
+        response = Response(status=200)
+        response.json = lambda: {}
+        session.post.return_value = response
+
+        self.client.force_authenticate(self.user)
+        response = self.client.post("/domains/test/shutdown/")
+        self.assertEqual(response.status_code, 200)
