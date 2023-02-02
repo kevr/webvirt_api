@@ -11,7 +11,6 @@ from rest_framework.decorators import permission_classes as permissions
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.request import Request
 from rest_framework.response import Response
-from rest_framework.views import APIView
 
 
 def api_request(request_uri: str, user: str):
@@ -34,22 +33,20 @@ def api_request(request_uri: str, user: str):
     return (status_code, data)
 
 
-class DomainsView(APIView):
-    permission_classes = [IsAuthenticated]
+@api_view(["GET"])
+@permissions([IsAuthenticated])
+def domains(request: Request) -> Response:
+    user = request.user.username
+    status_code, data = api_request("/domains/", user)
+    return Response(data, status_code)
 
-    def get(self, request: Request) -> Response:
-        user = request.user.username
-        status_code, data = api_request("/domains/", user)
-        return Response(data, status_code)
 
-
-class DomainView(APIView):
-    permission_classes = [IsAuthenticated]
-
-    def get(self, request: Request, name: str) -> Response:
-        user = request.user.username
-        status_code, data = api_request(f"/domains/{name}/", user)
-        return Response(data, status_code)
+@api_view(["GET"])
+@permissions([IsAuthenticated])
+def domain(request: Request, name: str) -> Response:
+    user = request.user.username
+    status_code, data = api_request(f"/domains/{name}/", user)
+    return Response(data, status_code)
 
 
 @api_view(["POST"])
