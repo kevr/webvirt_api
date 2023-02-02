@@ -33,33 +33,9 @@ def api_request(request_uri: str, user: str):
     return (status_code, data)
 
 
-@api_view(["GET"])
+@api_view(["GET", "POST"])
 @permissions([IsAuthenticated])
-def domains(request: Request) -> Response:
+def http_request(request: Request, *args, **kwargs) -> Response:
     user = request.user.username
-    status_code, data = api_request("/domains/", user)
-    return Response(data, status_code)
-
-
-@api_view(["GET"])
-@permissions([IsAuthenticated])
-def domain(request: Request, name: str) -> Response:
-    user = request.user.username
-    status_code, data = api_request(f"/domains/{name}/", user)
-    return Response(data, status_code)
-
-
-@api_view(["POST"])
-@permissions([IsAuthenticated])
-def domain_start(request: Request, name: str) -> Response:
-    user = request.user.username
-    status_code, data = api_request(f"/domains/{name}/start/", user)
-    return Response(data, status_code)
-
-
-@api_view(["POST"])
-@permissions([IsAuthenticated])
-def domain_shutdown(request: Request, name: str) -> Response:
-    user = request.user.username
-    status_code, data = api_request(f"/domains/{name}/shutdown/", user)
+    status_code, data = api_request(request.path, user)
     return Response(data, status_code)
