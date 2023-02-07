@@ -18,6 +18,7 @@ from . import views
 urlpatterns = [
     path("domains/", views.http_request),
     path("domains/<str:name>/", views.http_request),
+    path("domains/<str:name>/autostart/", views.http_request),
     path("domains/<str:name>/start/", views.http_request),
     path("domains/<str:name>/shutdown/", views.http_request),
 ]

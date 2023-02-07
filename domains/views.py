@@ -11,7 +11,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
 # implied. See the License for the specific language governing
 # permissions and limitations under the License.
-import json
 from http import HTTPStatus
 from urllib.parse import quote_plus
 
@@ -25,15 +24,16 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 
 
-def api_request(request_uri: str, user: str):
-    session = requests_unixsocket.Session()
+def api_request(
+    request_fn, request_uri: str, user: str, data: dict[str, str] = {}
+):
     uri = quote_plus(settings.WEBVIRTD_SOCKET)
+    user = quote_plus(user)
     status_code = HTTPStatus.OK
-    data = {}
     try:
-        response = session.post(
-            f"http+unix://{uri}{request_uri}",
-            data=json.dumps({"user": user}),
+        response = request_fn(
+            f"http+unix://{uri}/users/{user}{request_uri}",
+            data=data,
         )
 
         status_code = response.status_code
@@ -45,9 +45,12 @@ def api_request(request_uri: str, user: str):
     return (status_code, data)
 
 
-@api_view(["GET", "POST"])
+@api_view(["GET", "POST", "DELETE"])
 @permissions([IsAuthenticated])
 def http_request(request: Request, *args, **kwargs) -> Response:
-    user = request.user.username
-    status_code, data = api_request(request.path, user)
+    session = requests_unixsocket.Session()
+    request_fn = getattr(session, request.method.lower())
+    status_code, data = api_request(
+        request_fn, request.path, request.user.username, data=request.data
+    )
     return Response(data, status_code)
