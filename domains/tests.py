@@ -31,7 +31,7 @@ class DomainsTest(TestCase):
 
         response = Response(status=200)
         response.json = lambda: []
-        session.post.return_value = response
+        session.get.return_value = response
 
         self.client.force_authenticate(self.user)
         response = self.client.get("/domains/")
@@ -43,7 +43,7 @@ class DomainsTest(TestCase):
         session = mock.return_value
 
         response = Response(status=200)
-        session.post.side_effect = ConnectionError
+        session.get.side_effect = ConnectionError
 
         self.client.force_authenticate(self.user)
         response = self.client.get("/domains/")
@@ -64,7 +64,7 @@ class DomainTest(TestCase):
 
         response = Response(status=200)
         response.json = lambda: {}
-        session.post.return_value = response
+        session.get.return_value = response
 
         self.client.force_authenticate(self.user)
         response = self.client.get("/domains/test/")
@@ -76,7 +76,7 @@ class DomainTest(TestCase):
         session = mock.return_value
 
         response = Response(status=200)
-        session.post.side_effect = ConnectionError
+        session.get.side_effect = ConnectionError
 
         self.client.force_authenticate(self.user)
         response = self.client.get("/domains/test/")
