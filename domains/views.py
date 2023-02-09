@@ -11,6 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
 # implied. See the License for the specific language governing
 # permissions and limitations under the License.
+import json
 from http import HTTPStatus
 from urllib.parse import quote_plus
 
@@ -37,7 +38,11 @@ def api_request(
         )
 
         status_code = response.status_code
-        data = response.json()
+        try:
+            data = response.json()
+        except Exception:
+            data = {}
+
     except ConnectionError:
         status_code = HTTPStatus.INTERNAL_SERVER_ERROR
         data["detail"] = "Unable to connect to webvirtd"
@@ -50,7 +55,17 @@ def api_request(
 def http_request(request: Request, *args, **kwargs) -> Response:
     session = requests_unixsocket.Session()
     request_fn = getattr(session, request.method.lower())
+
+    data = {}
+    try:
+        data = json.loads(request.body.decode())
+    except Exception:
+        pass
+
     status_code, data = api_request(
-        request_fn, request.path, request.user.username, data=request.data
+        request_fn,
+        request.path,
+        request.user.username,
+        data=data,
     )
     return Response(data, status_code)

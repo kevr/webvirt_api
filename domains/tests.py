@@ -108,3 +108,14 @@ class DomainTest(TestCase):
         self.client.force_authenticate(self.user)
         response = self.client.post("/domains/test/shutdown/")
         self.assertEqual(response.status_code, 200)
+
+    @mock.patch("requests_unixsocket.Session")
+    def test_default_data(self, mock: mock.MagicMock):
+        session = mock.return_value
+
+        response = Response(status=200)
+        session.post.return_value = response
+
+        self.client.force_authenticate(self.user)
+        response = self.client.post("/domains/test/metadata/")
+        self.assertEqual(response.status_code, 200)
