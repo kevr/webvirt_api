@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "webvirt-api"
-version = "0.1.0"
+version = "1.0.0"
 description = "Back-end API for the webvirt application"
 authors = ["Kevin Morris <kevr@0cost.org>"]
 license = "LICENSE"
