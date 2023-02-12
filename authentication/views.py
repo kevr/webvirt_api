@@ -30,7 +30,7 @@ class AuthView(APIView):
         username = request.data.get("user", str())
         password = request.data.get("password", str())
 
-        if not self.pam.authenticate(username, password, service="login"):
+        if not self.pam.authenticate(username, password, service="shadow"):
             return Response(
                 {"detail": "Unrecognized user/password combination"},
                 status=HTTPStatus.UNAUTHORIZED,
