@@ -33,11 +33,10 @@ SECRET_KEY = os.environ.get("SECRET_KEY", DEBUG_SECRET)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = str2bool(os.environ.get("DEBUG", "1"))
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "localhost webvirt").split()
 
 
 # Application definition
-
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -155,7 +154,9 @@ SIMPLE_JWT = {
     "ROTATE_REFRESH_TOKENS": True,
 }
 
-CORS_ALLOWED_ORIGINS = ["http://localhost:3000"]
+CORS_ORIGINS = os.environ.get("CORS_ORIGINS", "http://localhost:3000")
+CORS_ALLOWED_ORIGINS = CORS_ORIGINS.split(" ")
+print(f"Allow origins: {CORS_ALLOWED_ORIGINS}")
 
 WEBVIRTD_SOCKET = os.getenv(
     "WEBVIRTD_SOCKET", "/var/run/webvirtd/webvirtd.sock"
