@@ -23,4 +23,6 @@ urlpatterns = [
     path("domains/<str:name>/metadata/", views.http_request),
     path("domains/<str:name>/start/", views.http_request),
     path("domains/<str:name>/shutdown/", views.http_request),
+    # TODO: This should be in a 'host' app, not domains.
+    path("networks/", views.http_request),
 ]
