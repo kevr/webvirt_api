@@ -11,12 +11,11 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
 # implied. See the License for the specific language governing
 # permissions and limitations under the License.
-from django.contrib import admin
-from django.urls import include, path
+from django.urls import path
+
+from webvirt_api import views
 
 urlpatterns = [
-    path("", include("authentication.urls")),
-    path("", include("domains.urls")),
-    path("", include("host.urls")),
-    path("admin/", admin.site.urls),
+    path("host/", views.http_request),
+    path("host/networks/", views.http_request),
 ]
