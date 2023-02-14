@@ -24,5 +24,5 @@ urlpatterns = [
     path("domains/<str:name>/start/", views.http_request),
     path("domains/<str:name>/shutdown/", views.http_request),
     # TODO: This should be in a 'host' app, not domains.
-    path("networks/", views.http_request),
+    path("host/networks/", views.http_request),
 ]
